@@ -1,20 +1,20 @@
 using HomeBudget.Models.Entities;
+using HomeBudget.Models.Entities.DAL;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeBudget.Models;
 
 public class HomeBudgetContext: DbContext
 {
+    public HomeBudgetContext(DbContextOptions<HomeBudgetContext> options) : base(options)
+    {
+        
+    }
+    
     public DbSet<User> Users { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Transaction> Transactions { get; set; }
     
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder
-            .UseSqlite("Data Source=./App_Data/HomebudgetDB.db");
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>()

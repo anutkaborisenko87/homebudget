@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HomeBudget.Models.Entities;
+namespace HomeBudget.Models.Entities.DAL;
 
 [Table("Transactions")]
 public class Transaction
