@@ -15,10 +15,12 @@ public class CategoryRepository: ICategoryRepository
     
     public IEnumerable<Category> GetAllCategories()
     {
-        return context.Categories.ToList();
+        return context.Categories
+            .Include(c => c.Transactions)
+            .ToList();
     }
 
-    public Category GetCategoryById(Guid id)
+    public Category GetCategoryById(int id)
     {
         return context.Categories.Find(id);
     }
@@ -31,14 +33,21 @@ public class CategoryRepository: ICategoryRepository
 
     public void UpdateCategory(Category category)
     {
-        context.Entry(category).State = EntityState.Modified;
+        var existingCategory = context.Categories.Find(category.Id);
+        context.Entry(existingCategory).CurrentValues.SetValues(category);
+        context.Entry(existingCategory).State = EntityState.Modified;
         context.SaveChanges();
     }
 
-    public void DeleteCategory(Guid id)
+    public void DeleteCategory(int id)
     {
         var category = context.Categories.Find(id);
         context.Categories.Remove(category);
         context.SaveChanges();
+    }
+    
+    public bool HasTransactions(int categoryId)
+    {
+        return context.Transactions.Any(t => t.CategoryId == categoryId);
     }
 }

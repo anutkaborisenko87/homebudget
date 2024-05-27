@@ -16,10 +16,12 @@ public class UserRepository: IUserRepository
     
     public IEnumerable<User> GetUsers()
     {
-        return context.Users.ToList();
+        return context.Users
+            .Include(u => u.Transactions)
+            .ToList();
     }
 
-    public User GetUser(Guid id)
+    public User GetUser(int id)
     {
         return context.Users.Find(id);
     }
@@ -36,7 +38,7 @@ public class UserRepository: IUserRepository
         context.SaveChanges();
     }
 
-    public void DeleteUser(Guid id)
+    public void DeleteUser(int id)
     {
         var user = context.Users.Find(id);
         context.Users.Remove(user);

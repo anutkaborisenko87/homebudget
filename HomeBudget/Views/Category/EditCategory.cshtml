@@ -1,0 +1,34 @@
+@model HomeBudget.Models.Entities.BLL.CategoryBLL
+@{
+    ViewData["Title"] = "Редагування категорії " + Model.Title;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Головна</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Категорії</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Редагування категорії @Model.Title</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-header">
+        <h2>Редагувати категорію @Model.Title</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="UpdateCategory" method="post">
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" class="form-control"/>
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group m-2">
+                <input type="submit" value="Редагувати" class="btn btn-outline-primary"/> |
+                <a class="btn btn-outline-light" asp-controller="Category" asp-action="Index">Повернутись</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

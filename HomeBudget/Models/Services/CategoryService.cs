@@ -21,7 +21,7 @@ public class CategoryService: ICategoryService
         return mapper.Map<IEnumerable<CategoryBLL>>(categoryRepository.GetAllCategories());
     }
 
-    public CategoryBLL GetCategoryById(Guid id)
+    public CategoryBLL GetCategoryById(int id)
     {
         return mapper.Map<CategoryBLL>(categoryRepository.GetCategoryById(id));
     }
@@ -36,8 +36,13 @@ public class CategoryService: ICategoryService
         categoryRepository.UpdateCategory(mapper.Map<Category>(categoryBll));
     }
 
-    public void DeleteCategory(Guid id)
+    public void DeleteCategory(int id)
     {
         categoryRepository.DeleteCategory(id);
+    }
+    
+    public bool HasTransactions(int categoryId)
+    {
+        return categoryRepository.HasTransactions(categoryId);
     }
 }

@@ -21,9 +21,10 @@ public class TransactionService: ITransactionService
         return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetAllTransactions());
     }
 
-    public TransactionBLL GetTransactionById(Guid id)
+    public  TransactionBLL GetTransactionById(int id)
     {
-        return mapper.Map<TransactionBLL>(transactionRepository.GetTransactionById(id));
+        var transactionEntity = transactionRepository.GetTransactionById(id);
+        return mapper.Map<TransactionBLL>(transactionEntity);
     }
 
     public IEnumerable<TransactionBLL> GetTransactionsByType(TransactionType type)
@@ -31,28 +32,25 @@ public class TransactionService: ITransactionService
         return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetTransactionsByType(type));
     }
 
-    public IEnumerable<TransactionBLL> GetTransactionsByCategory(CategoryBLL categoryBll)
+    public IEnumerable<TransactionBLL> GetTransactionsByCategory(int categoryId)
     {
-        var category = mapper.Map<Category>(categoryBll);
-        return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetTransactionsByCategory(category));
+        var transactions = transactionRepository.GetTransactionsByCategory(categoryId);
+        return mapper.Map<IEnumerable<TransactionBLL>>(transactions);
     }
 
-    public IEnumerable<TransactionBLL> GetCategoryTransactionsByType(CategoryBLL categoryBll, TransactionType type)
+    public IEnumerable<TransactionBLL> GetCategoryTransactionsByType(int categoryId, TransactionType type)
     {
-        var category = mapper.Map<Category>(categoryBll);
-        return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetCategoryTransactionsByType(category, type));
+        return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetCategoryTransactionsByType(categoryId, type));
     }
 
-    public IEnumerable<TransactionBLL> GetTransactionsByUser(UserBLL userBll)
+    public IEnumerable<TransactionBLL> GetTransactionsByUser(int userId)
     {
-        var user = mapper.Map<User>(userBll);
-        return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetTransactionsByUser(user));
+        return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetTransactionsByUser(userId));
     }
 
-    public IEnumerable<TransactionBLL> GetUserTransactionsByType(UserBLL userBll, TransactionType type)
+    public IEnumerable<TransactionBLL> GetUserTransactionsByType(int userId, TransactionType type)
     {
-        var user = mapper.Map<User>(userBll);
-        return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetUserTransactionsByType(user, type));
+        return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetUserTransactionsByType(userId, type));
     }
 
     public void AddTransaction(TransactionBLL transactionBll)
@@ -65,8 +63,74 @@ public class TransactionService: ITransactionService
         transactionRepository.UpdateTransaction(mapper.Map<Transaction>(transactionBll));
     }
 
-    public void DeleteTransaction(Guid id)
+    public void DeleteTransaction(int id)
     {
        transactionRepository.DeleteTransaction(id);
+    }
+
+    public decimal CalculateIncomeExpenseDifference()
+    {
+        var incomeTransactions = transactionRepository.GetTransactionsByType(TransactionType.Income);
+        var expenseTransactions = transactionRepository.GetTransactionsByType(TransactionType.Expense);
+        decimal incomeTotal = incomeTransactions.Sum(t => t.Amount);
+        decimal expenseTotal = expenseTransactions.Sum(t => t.Amount);
+        decimal difference = incomeTotal - expenseTotal;
+        return difference;
+    }
+
+    public decimal CalculateExpenseSum()
+    {
+        var expenseTransactions = transactionRepository.GetTransactionsByType(TransactionType.Expense);
+        return expenseTransactions.Sum(t => t.Amount);
+    }
+
+    public decimal CalculateIncomeSum()
+    {
+        var incomeTransactions = transactionRepository.GetTransactionsByType(TransactionType.Income);
+        return incomeTransactions.Sum(t => t.Amount);
+    }
+
+    public decimal CalculateCategoryIncomeExpenseDifference(int categoryId)
+    {
+        var incomeTransactions = transactionRepository.GetCategoryTransactionsByType(categoryId, TransactionType.Income);
+        var expenseTransactions = transactionRepository.GetCategoryTransactionsByType(categoryId, TransactionType.Expense);
+        decimal incomeTotal = incomeTransactions.Sum(t => t.Amount);
+        decimal expenseTotal = expenseTransactions.Sum(t => t.Amount);
+        decimal difference = incomeTotal - expenseTotal;
+        return difference;
+    }
+
+    public decimal CalculateCategoryIncomeSum(int categoryId)
+    {
+        var incomeTransactions = transactionRepository.GetCategoryTransactionsByType(categoryId, TransactionType.Income);
+        return incomeTransactions.Sum(t => t.Amount);
+    }
+
+    public decimal CalculateCategoryExpenseSum(int categoryId)
+    {
+        var expenseTransactions = transactionRepository.GetCategoryTransactionsByType(categoryId, TransactionType.Expense);
+        return expenseTransactions.Sum(t => t.Amount);
+    }
+
+    public decimal CalculateUserIncomeExpenseDifference(int userId)
+    {
+        var incomeTransactions = transactionRepository.GetUserTransactionsByType(userId, TransactionType.Income);
+        var expenseTransactions = transactionRepository.GetUserTransactionsByType(userId, TransactionType.Expense);
+        decimal incomeTotal = incomeTransactions.Sum(t => t.Amount);
+        decimal expenseTotal = expenseTransactions.Sum(t => t.Amount);
+        decimal difference = incomeTotal - expenseTotal;
+        return difference;
+    }
+
+    public decimal CalculateUserIncomeSum(int userId)
+    {
+        var incomeTransactions = transactionRepository.GetUserTransactionsByType(userId, TransactionType.Income);
+        return incomeTransactions.Sum(t => t.Amount);
+    }
+
+    public decimal CalculateUserExpenseSum(int userId)
+    {
+        var expenseTransactions = transactionRepository.GetUserTransactionsByType(userId, TransactionType.Expense);
+        return expenseTransactions.Sum(t => t.Amount);
     }
 }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeBudget.Migrations
 {
     [DbContext(typeof(HomeBudgetContext))]
-    [Migration("20240519181741_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240527104932_initialigration")]
+    partial class initialigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,11 +20,11 @@ namespace HomeBudget.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
-            modelBuilder.Entity("HomeBudget.Models.Entities.Category", b =>
+            modelBuilder.Entity("HomeBudget.Models.Entities.DAL.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -35,17 +35,17 @@ namespace HomeBudget.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("HomeBudget.Models.Entities.Transaction", b =>
+            modelBuilder.Entity("HomeBudget.Models.Entities.DAL.Transaction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
@@ -57,8 +57,8 @@ namespace HomeBudget.Migrations
                     b.Property<int>("TransactionType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -69,11 +69,11 @@ namespace HomeBudget.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("HomeBudget.Models.Entities.User", b =>
+            modelBuilder.Entity("HomeBudget.Models.Entities.DAL.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -84,15 +84,15 @@ namespace HomeBudget.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HomeBudget.Models.Entities.Transaction", b =>
+            modelBuilder.Entity("HomeBudget.Models.Entities.DAL.Transaction", b =>
                 {
-                    b.HasOne("HomeBudget.Models.Entities.Category", "Category")
+                    b.HasOne("HomeBudget.Models.Entities.DAL.Category", "Category")
                         .WithMany("Transactions")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HomeBudget.Models.Entities.User", "User")
+                    b.HasOne("HomeBudget.Models.Entities.DAL.User", "User")
                         .WithMany("Transactions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -103,12 +103,12 @@ namespace HomeBudget.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("HomeBudget.Models.Entities.Category", b =>
+            modelBuilder.Entity("HomeBudget.Models.Entities.DAL.Category", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("HomeBudget.Models.Entities.User", b =>
+            modelBuilder.Entity("HomeBudget.Models.Entities.DAL.User", b =>
                 {
                     b.Navigation("Transactions");
                 });

@@ -1,0 +1,69 @@
+@model IEnumerable<HomeBudget.Models.Entities.BLL.TransactionBLL>
+@{
+    ViewData["Title"] = ViewBag.TransactionType;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Головна</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Transaction" asp-action="Index">Транзакції</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.TransactionType</li>
+    </ol>
+</nav>
+<div class="text-center">
+    <h1 class="display-4">@ViewBag.TransactionsType</h1>
+    @if (Model.Count() > 0)
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Сума</th>
+                <th>Категорія</th>
+                <th>Хто</th>
+                <th>Дата</th>
+                <th>дії</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var transaction in Model)
+            {
+                <tr>
+                    <td>@transaction.Amount</td>
+                    <td><a asp-area="" asp-route-categoryId="@transaction.Category.Id" asp-controller="Transaction" asp-action="TransactionByCategory">@transaction.Category.Title</a></td>
+                    <td><a asp-area="" asp-route-userId="@transaction.User.Id" asp-controller="Transaction" asp-action="TransactionByUser">@transaction.User.Name</a></td>
+                    <td>@transaction.Date</td>
+                    <td>
+                        <a class="btn btn-outline-info btn-sm"  asp-route-transactionId="@transaction.Id" asp-controller="Transaction" asp-action="Edit">Редагувати</a>
+                        <form method="post" action="@Url.Action("DeleteTransaction", "Transaction")" onsubmit="return confirmDelete();">
+                            <input type="hidden" name="transactionId" value="@transaction.Id" />
+                            <button type="submit" class="btn btn-outline-danger btn-sm m-2">Видалити</button>
+                        </form>
+                    </td>
+                </tr>
+
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h4 class="display-4">Інформація відсутня</h4>
+    }
+    <div class="card">
+        <div class="card-header">
+            <h2>Рух коштів за типом</h2>
+        </div>
+        <div class="card-footer">
+            Всього: @ViewBag.Budget
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            return confirm('Ви впевнені, що хочете видалити цю транзакцію?');
+        }
+    </script>
+}

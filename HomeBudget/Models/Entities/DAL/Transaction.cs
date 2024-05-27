@@ -7,7 +7,7 @@ namespace HomeBudget.Models.Entities.DAL;
 public class Transaction
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     [Required]
     public decimal Amount { get; set; }
     [Required]
@@ -17,10 +17,10 @@ public class Transaction
     [Required]
     public TransactionType TransactionType { get; set; }
     [Required]
-    public Guid UserId { get; set; }
+    public int UserId { get; set; }
     public virtual User User { get; set; }
     
     [Required]
-    public Guid CategoryId { get; set; }
+    public int CategoryId { get; set; }
     public virtual Category Category { get; set; }
 }

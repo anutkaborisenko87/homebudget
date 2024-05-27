@@ -1,27 +1,27 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using HomeBudget.Models;
-using HomeBudget.Models.Entities;
+using HomeBudget.Models.Entities.BLL;
+using HomeBudget.Models.Interfaces;
 
 namespace HomeBudget.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private ITransactionService transactionService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(
+        ITransactionService transactionService
+        )
     {
-        _logger = logger;
+        this.transactionService = transactionService;
     }
 
     public IActionResult Index()
     {
-      return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
+        var budget = transactionService.CalculateIncomeExpenseDifference();
+        return View(budget);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

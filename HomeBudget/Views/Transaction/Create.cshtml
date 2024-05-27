@@ -1,0 +1,63 @@
+@model HomeBudget.Models.Entities.BLL.TransactionBLL
+
+@{
+ViewData["Title"] = "Створення транзакції";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Головна</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Transaction" asp-action="Index">Транзакції</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Створення транзакції</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-header">
+        <h2>Створити транзакцію</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="AddTransaction" method="post">
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label">Сума транзакції</label>
+                <input type="number" step="0.05" min="0" asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label">Дата</label>
+                <input type="date" asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Опис</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TransactionType" class="control-label">Тип транзакції</label>
+                <select asp-for="TransactionType" class="form-control" asp-items="ViewBag.TransactionType"></select>
+                <span asp-validation-for="TransactionType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label">Хто провів транзакцію</label>
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">Категорія транзакції</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group m-2">
+                <input type="submit" value="Створити" class="btn btn-outline-primary" /> |
+                <a class="btn btn-outline-light" asp-controller="Transaction" asp-action="Index">Повернутись</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

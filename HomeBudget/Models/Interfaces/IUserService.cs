@@ -6,9 +6,9 @@ public interface IUserService
 {
     IEnumerable<UserBLL> GetAllUsers();
 
-    UserBLL GetUser(Guid id);
+    UserBLL GetUser(int id);
 
-    void DeleteUser(Guid id);
+    void DeleteUser(int id);
 
     void UpdateUser(UserBLL userBll);
 

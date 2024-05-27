@@ -1,0 +1,51 @@
+@model  IEnumerable<HomeBudget.Models.Entities.BLL.CategoryBLL>
+@{
+    ViewData["Title"] = "Categories Page";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Головна</a></li>
+        <li class="breadcrumb-item active">Категорії</li>
+    </ol>
+</nav>
+<div class="text-center">
+    <h1 class="display-4">Категорії трат/доходів</h1>
+    <div class="row">
+        <a class="btn btn-outline-primary" asp-area="" asp-controller="Category" asp-action="Create">Створити нову категорію</a>
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Назва</th>
+            <th>дії</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var category in Model)
+        {
+            <tr>
+                <td><a asp-area="" asp-route-categoryId="@category.Id" asp-controller="Transaction" asp-action="TransactionByCategory">@category.Title</a></td>
+                <td>
+                    <a class="btn btn-outline-info btn-sm m-2" asp-area="" asp-route-categoryId="@category.Id" asp-controller="Category" asp-action="EditCategory">Edit</a>
+                    @if (category.Transactions.Count() == 0)
+                    {
+                        <form method="post" action="@Url.Action("DeleteCategory", "Category")" onsubmit="return confirmDelete();">
+                            <input type="hidden" name="categoryId" value="@category.Id" />
+                            <button type="submit" class="btn btn-outline-danger btn-sm m-2">Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            return confirm('Ви впевнені, що хочете видалити цю категорію?');
+        }
+    </script>
+}

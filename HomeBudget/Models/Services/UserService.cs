@@ -22,12 +22,12 @@ public class UserService: IUserService
         return mapper.Map<IEnumerable<UserBLL>>(userRepository.GetUsers());
     }
 
-    public UserBLL GetUser(Guid id)
+    public UserBLL GetUser(int id)
     {
         return mapper.Map<UserBLL>(userRepository.GetUser(id));
     }
 
-    public void DeleteUser(Guid id)
+    public void DeleteUser(int id)
     {
         userRepository.DeleteUser(id);
     }

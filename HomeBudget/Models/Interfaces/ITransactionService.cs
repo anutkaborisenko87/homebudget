@@ -6,13 +6,22 @@ namespace HomeBudget.Models.Interfaces;
 public interface ITransactionService
 {
     IEnumerable<TransactionBLL> GetAllTransactions();
-    TransactionBLL GetTransactionById(Guid id);
+    TransactionBLL GetTransactionById(int id);
     IEnumerable<TransactionBLL> GetTransactionsByType(TransactionType type);
-    IEnumerable<TransactionBLL> GetTransactionsByCategory(CategoryBLL categoryBll);
-    IEnumerable<TransactionBLL> GetCategoryTransactionsByType(CategoryBLL categoryBll, TransactionType type);
-    IEnumerable<TransactionBLL> GetTransactionsByUser(UserBLL userBll);
-    IEnumerable<TransactionBLL> GetUserTransactionsByType(UserBLL userBll, TransactionType type);
+    IEnumerable<TransactionBLL> GetTransactionsByCategory(int categoryId);
+    IEnumerable<TransactionBLL> GetCategoryTransactionsByType(int categoryId, TransactionType type);
+    IEnumerable<TransactionBLL> GetTransactionsByUser(int userId);
+    IEnumerable<TransactionBLL> GetUserTransactionsByType(int userId, TransactionType type);
     void AddTransaction(TransactionBLL transactionBll);
     void UpdateTransaction(TransactionBLL transactionBll);
-    void DeleteTransaction(Guid id);
+    void DeleteTransaction(int id);
+    decimal CalculateIncomeExpenseDifference();
+    decimal CalculateExpenseSum();
+    decimal CalculateIncomeSum();
+    decimal CalculateCategoryIncomeExpenseDifference(int categoryId);
+    decimal CalculateCategoryExpenseSum(int categoryId);
+    decimal CalculateCategoryIncomeSum(int categoryId);
+    decimal CalculateUserIncomeExpenseDifference(int userId);
+    decimal CalculateUserIncomeSum(int userId);
+    decimal CalculateUserExpenseSum(int userId);
 }

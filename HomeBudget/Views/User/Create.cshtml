@@ -1,0 +1,33 @@
+@model HomeBudget.Models.Entities.BLL.UserBLL
+@{
+    ViewData["Title"] = "Створення користувача";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Головна</a></li>
+        <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Користувачі</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Створення користувача</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="card-header">
+        <h2>Створити користувача</h2>
+    </div>
+    <div class="card-body">
+        <form asp-action="AddUser" method="post">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Ім'я користувача</label>
+                <input asp-for="Name" class="form-control"/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group m-2">
+                <input type="submit" value="Створити" class="btn btn-outline-primary"/> |
+                <a class="btn btn-outline-light" asp-controller="User" asp-action="Index">Повернутись</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
