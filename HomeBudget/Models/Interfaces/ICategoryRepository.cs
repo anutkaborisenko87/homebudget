@@ -6,9 +6,9 @@ namespace HomeBudget.Models.Interfaces;
 public interface ICategoryRepository
 {
     IEnumerable<Category> GetAllCategories();
-    Category GetCategoryById(int Id);
-    void AddCategory(Category category);
-    void UpdateCategory(Category category);
-    void DeleteCategory(int Id);
-    bool HasTransactions(int categoryId);
+    Category? GetCategoryById(int Id);
+    Category AddCategory(Category category);
+    Category UpdateCategory(Category category);
+    Category DeleteCategory(int Id);
+     bool HasTransactions(int categoryId);
 }

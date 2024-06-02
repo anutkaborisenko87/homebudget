@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace HomeBudget.Models.Entities.DAL;
 
@@ -11,5 +12,6 @@ public class User
     [Required]
     public string Name { get; set; }
     
+
     public IEnumerable<Transaction> Transactions { get; }
 }

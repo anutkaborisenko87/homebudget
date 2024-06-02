@@ -20,6 +20,7 @@ builder.Services.AddTransient<ITransactionRepository, TransactionRepository>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -31,6 +32,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

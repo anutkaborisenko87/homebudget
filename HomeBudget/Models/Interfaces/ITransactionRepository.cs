@@ -11,7 +11,7 @@ public interface ITransactionRepository
     IEnumerable<Transaction> GetCategoryTransactionsByType(int categoryId, TransactionType type);
     IEnumerable<Transaction> GetTransactionsByUser(int userId);
     IEnumerable<Transaction> GetUserTransactionsByType(int userId, TransactionType type);
-    void AddTransaction(Transaction transaction);
-    void UpdateTransaction(Transaction transaction);
-    void DeleteTransaction(int id);
+    Transaction AddTransaction(Transaction transaction);
+    Transaction UpdateTransaction(Transaction transaction);
+    Transaction DeleteTransaction(int id);
 }

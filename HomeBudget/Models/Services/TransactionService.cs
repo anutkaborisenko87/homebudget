@@ -53,19 +53,19 @@ public class TransactionService: ITransactionService
         return mapper.Map<IEnumerable<TransactionBLL>>(transactionRepository.GetUserTransactionsByType(userId, type));
     }
 
-    public void AddTransaction(TransactionBLL transactionBll)
+    public TransactionBLL AddTransaction(TransactionBLL transactionBll)
     {
-        transactionRepository.AddTransaction(mapper.Map<Transaction>(transactionBll));
+       return mapper.Map<TransactionBLL>(transactionRepository.AddTransaction(mapper.Map<Transaction>(transactionBll)));
     }
 
-    public void UpdateTransaction(TransactionBLL transactionBll)
+    public TransactionBLL UpdateTransaction(TransactionBLL transactionBll)
     {
-        transactionRepository.UpdateTransaction(mapper.Map<Transaction>(transactionBll));
+        return mapper.Map<TransactionBLL>(transactionRepository.UpdateTransaction(mapper.Map<Transaction>(transactionBll)));
     }
 
-    public void DeleteTransaction(int id)
+    public TransactionBLL DeleteTransaction(int id)
     {
-       transactionRepository.DeleteTransaction(id);
+        return mapper.Map<TransactionBLL>(transactionRepository.DeleteTransaction(id));
     }
 
     public decimal CalculateIncomeExpenseDifference()

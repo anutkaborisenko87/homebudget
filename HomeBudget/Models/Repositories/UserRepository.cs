@@ -21,27 +21,30 @@ public class UserRepository: IUserRepository
             .ToList();
     }
 
-    public User GetUser(int id)
+    public User? GetUser(int id)
     {
         return context.Users.Find(id);
     }
 
-    public void AddUser(User user)
+    public User AddUser(User user)
     {
-        context.Users.Add(user);
+        var res = context.Users.Add(user);
         context.SaveChanges();
+        return res.Entity;
     }
 
-    public void UpdateUser(User user)
+    public User UpdateUser(User user)
     {
         context.Entry(user).State = EntityState.Modified;
         context.SaveChanges();
+        return user;
     }
 
-    public void DeleteUser(int id)
+    public User DeleteUser(int id)
     {
         var user = context.Users.Find(id);
         context.Users.Remove(user);
         context.SaveChanges();
+        return user;
     }
 }

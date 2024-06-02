@@ -26,19 +26,19 @@ public class CategoryService: ICategoryService
         return mapper.Map<CategoryBLL>(categoryRepository.GetCategoryById(id));
     }
 
-    public void AddCategory(CategoryBLL categoryBll)
+    public CategoryBLL AddCategory(CategoryBLL categoryBll)
     {
-        categoryRepository.AddCategory(mapper.Map<Category>(categoryBll));
+        return mapper.Map<CategoryBLL>(categoryRepository.AddCategory(mapper.Map<Category>(categoryBll)));
     }
 
-    public void UpdateCategory(CategoryBLL categoryBll)
+    public CategoryBLL UpdateCategory(CategoryBLL categoryBll)
     {
-        categoryRepository.UpdateCategory(mapper.Map<Category>(categoryBll));
+        return mapper.Map<CategoryBLL>(categoryRepository.UpdateCategory(mapper.Map<Category>(categoryBll)));
     }
 
-    public void DeleteCategory(int id)
+    public CategoryBLL DeleteCategory(int id)
     {
-        categoryRepository.DeleteCategory(id);
+        return mapper.Map<CategoryBLL>(categoryRepository.DeleteCategory(id));
     }
     
     public bool HasTransactions(int categoryId)

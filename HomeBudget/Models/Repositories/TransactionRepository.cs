@@ -71,22 +71,25 @@ public class TransactionRepository: ITransactionRepository
             .ToList();
     }
 
-    public void AddTransaction(Transaction transaction)
+    public Transaction AddTransaction(Transaction transaction)
     {
-       context.Transactions.Add(transaction);
+       var res = context.Transactions.Add(transaction);
        context.SaveChanges();
+       return res.Entity;
     }
 
-    public void UpdateTransaction(Transaction transaction)
+    public Transaction UpdateTransaction(Transaction transaction)
     {
         context.Entry(transaction).State = EntityState.Modified;
         context.SaveChanges();
+        return transaction;
     }
 
-    public void DeleteTransaction(int id)
+    public Transaction DeleteTransaction(int id)
     {
         var transaction = context.Transactions.Find(id);
         context.Transactions.Remove(transaction);
         context.SaveChanges();
+        return transaction;
     }
 }

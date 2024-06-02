@@ -1,10 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using HomeBudget.Models.Entities.DAL;
-using Newtonsoft.Json;
 
-namespace HomeBudget.Models.Entities.BLL;
+namespace HomeBudget.Models.Entities.Api;
 
-public class TransactionBLL
+public class GetTransactionsResponse
 {
     public int Id { get; set; }
     public decimal Amount { get; set; }
@@ -13,9 +11,6 @@ public class TransactionBLL
     
     public string Description { get; set; }
     public TransactionType TransactionType { get; set; }
-    
-    public virtual User User { get; set; }
-    public virtual Category Category { get; set; }
     public int UserId { get; set; }
     public int CategoryId { get; set; }
 }

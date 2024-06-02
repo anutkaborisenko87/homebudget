@@ -27,18 +27,18 @@ public class UserService: IUserService
         return mapper.Map<UserBLL>(userRepository.GetUser(id));
     }
 
-    public void DeleteUser(int id)
+    public UserBLL DeleteUser(int id)
     {
-        userRepository.DeleteUser(id);
+       return mapper.Map<UserBLL>(userRepository.DeleteUser(id));
     }
 
-    public void UpdateUser(UserBLL userBll)
+    public UserBLL UpdateUser(UserBLL userBll)
     {
-        userRepository.UpdateUser(mapper.Map<User>(userBll));
+        return mapper.Map<UserBLL>(userRepository.UpdateUser(mapper.Map<User>(userBll)));
     }
 
-    public void AddUser(UserBLL userBll)
+    public UserBLL AddUser(UserBLL userBll)
     {
-        userRepository.AddUser(mapper.Map<User>(userBll));
+        return mapper.Map<UserBLL>(userRepository.AddUser(mapper.Map<User>(userBll)));
     }
 }

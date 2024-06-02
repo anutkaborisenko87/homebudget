@@ -6,8 +6,8 @@ public interface ICategoryService
 {
     IEnumerable<CategoryBLL> GetAllCategories();
     CategoryBLL GetCategoryById(int id);
-    void AddCategory(CategoryBLL categoryBll);
-    void UpdateCategory(CategoryBLL categoryBll);
-    void DeleteCategory(int id);
+    CategoryBLL AddCategory(CategoryBLL categoryBll);
+    CategoryBLL UpdateCategory(CategoryBLL categoryBll);
+    CategoryBLL DeleteCategory(int id);
     bool HasTransactions(int categoryId);
 }

@@ -20,30 +20,33 @@ public class CategoryRepository: ICategoryRepository
             .ToList();
     }
 
-    public Category GetCategoryById(int id)
+    public Category? GetCategoryById(int id)
     {
-        return context.Categories.Find(id);
+        return context.Categories.Include(c => c.Transactions).Where(c => c.Id == id).FirstOrDefault();
     }
 
-    public void AddCategory(Category category)
+    public Category AddCategory(Category category)
     {
-        context.Categories.Add(category);
+        var res = context.Categories.Add(category);
         context.SaveChanges();
+        return res.Entity;
     }
 
-    public void UpdateCategory(Category category)
+    public Category UpdateCategory(Category category)
     {
         var existingCategory = context.Categories.Find(category.Id);
         context.Entry(existingCategory).CurrentValues.SetValues(category);
         context.Entry(existingCategory).State = EntityState.Modified;
         context.SaveChanges();
+        return existingCategory;
     }
 
-    public void DeleteCategory(int id)
+    public Category DeleteCategory(int id)
     {
         var category = context.Categories.Find(id);
         context.Categories.Remove(category);
         context.SaveChanges();
+        return category;
     }
     
     public bool HasTransactions(int categoryId)

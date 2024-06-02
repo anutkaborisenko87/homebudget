@@ -8,9 +8,9 @@ public interface IUserService
 
     UserBLL GetUser(int id);
 
-    void DeleteUser(int id);
+    UserBLL DeleteUser(int id);
 
-    void UpdateUser(UserBLL userBll);
+    UserBLL UpdateUser(UserBLL userBll);
 
-    void AddUser(UserBLL userBll);
+    UserBLL AddUser(UserBLL userBll);
 }

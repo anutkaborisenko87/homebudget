@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace HomeBudget.Models.Entities.DAL;
 
@@ -18,9 +19,11 @@ public class Transaction
     public TransactionType TransactionType { get; set; }
     [Required]
     public int UserId { get; set; }
+
     public virtual User User { get; set; }
     
     [Required]
     public int CategoryId { get; set; }
+
     public virtual Category Category { get; set; }
 }
